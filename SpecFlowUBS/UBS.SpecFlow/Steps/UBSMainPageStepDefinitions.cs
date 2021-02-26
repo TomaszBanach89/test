@@ -1,5 +1,8 @@
 ﻿using NUnit.Framework;
+using System;
+using System.Configuration;
 using TechTalk.SpecFlow;
+using UBS.Commons;
 using UBS.PageObjectModels;
 using UBS.PageObjectModels.USBHomePage;
 
@@ -12,7 +15,6 @@ namespace UBS.SpecFlow.Steps
         // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
 
         private readonly ScenarioContext _scenarioContext;
-        private string ubsUrl = "https://www.ubs.com";
         public UBSMainPageStepDefinitions(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
@@ -21,9 +23,11 @@ namespace UBS.SpecFlow.Steps
         [Given(@"Open UBS home page")]
         public void GivenOpenUBSHomePage()
         {
-            if(CommonMethods.GetWebDriver() != null && !CommonMethods.GetWebDriver().Url.Contains(ubsUrl))
+            var ubsURL = GlobalValues.GetConfigMasterObject().ApplicationURL;
+            Console.WriteLine(ubsURL);
+            if (CommonMethods.GetWebDriver() != null && !CommonMethods.GetWebDriver().Url.Contains(ubsURL)) 
             {
-                CommonMethods.GetWebDriver().Navigate().GoToUrl(ubsUrl);
+                CommonMethods.GetWebDriver().Navigate().GoToUrl(ubsURL);
                 CommonMethods.AcceptCookies();
             }
         }

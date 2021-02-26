@@ -3,6 +3,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using UBS.Commons;
 
@@ -15,7 +16,7 @@ namespace UBS.PageObjectModels
             if (GlobalValues.GetWebDriver() == null)
             {
                 var chromeOptions = new ChromeOptions();
-                chromeOptions.AddArguments("headless");
+                if(GlobalValues.GetConfigMasterObject().ChromeHeadless) chromeOptions.AddArguments("headless");
                 GlobalValues.SetWebDriver(new ChromeDriver(chromeOptions));
             }
             return GlobalValues.GetWebDriver();
